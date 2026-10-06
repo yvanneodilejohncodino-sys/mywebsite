@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Dev Resource Page</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+
+      background:
+        linear-gradient(135deg, #7b2cbf, #3c096c, #000000);
+
+      background-size: 300% 300%;
+      animation: gradientMove 12s ease infinite;
+
+      color: #f5f5f5;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* =========================
+       ANIMATED BACKGROUND
+    ========================= */
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: rgba(199, 125, 255, 0.15);
+      filter: blur(40px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before {
+      top: 5%;
+      left: 5%;
+      animation: floatingOrb 8s ease-in-out infinite;
+    }
+
+    body::after {
+      bottom: 5%;
+      right: 5%;
+      animation: floatingOrb 10s ease-in-out infinite reverse;
+    }
+
+    /* =========================
+       ANIMATIONS
+    ========================= */
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes floatingOrb {
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(50px, -40px) scale(1.2);
+      }
+    }
+
+    @keyframes containerAppear {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes titleAppear {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+        letter-spacing: -5px;
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: normal;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes glow {
+      0%,
+      100% {
+        text-shadow:
+          0 0 10px rgba(199, 125, 255, 0.4);
+      }
+
+      50% {
+        text-shadow:
+          0 0 25px rgba(199, 125, 255, 0.9),
+          0 0 45px rgba(199, 125, 255, 0.5);
+      }
+    }
+
+    @keyframes imageFloat {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow:
+          0 5px 15px rgba(0, 0, 0, 0.4);
+      }
+
+      50% {
+        box-shadow:
+          0 5px 30px rgba(199, 125, 255, 0.7);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -300px 0;
+      }
+
+      100% {
+        background-position: 300px 0;
+      }
+    }
+
+    /* =========================
+       MAIN GLASS CONTAINER
+    ========================= */
+
+    .container {
+      width: 100%;
+      max-width: 850px;
+
+      text-align: center;
+
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+
+      padding: 35px 40px;
+
+      border-radius: 20px;
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(199, 125, 255, 0.15);
+
+      animation: containerAppear 1s ease-out;
+    }
+
+    /* =========================
+       TITLE
+    ========================= */
+
+    h1 {
+      font-size: 2.4rem;
+      margin: 0 0 25px;
+
+      color: #ffffff;
+
+      border-bottom: 3px solid #c77dff;
+      padding-bottom: 10px;
+
+      text-shadow:
+        0 0 15px rgba(199, 125, 255, 0.7);
+
+      animation:
+        titleAppear 1s ease-out,
+        glow 3s ease-in-out infinite 1s;
+    }
+
+    h2 {
+      color: #c77dff;
+      font-size: 1.4rem;
+      margin-top: 35px;
+
+      text-shadow:
+        0 0 10px rgba(199, 125, 255, 0.3);
+
+      animation: fadeUp 0.8s ease-out both;
+    }
+
+    /* =========================
+       GLASS PARAGRAPHS
+    ========================= */
+
+    p {
+      color: #eeeeee;
+
+      background: rgba(255, 255, 255, 0.08);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+
+      padding: 18px 20px;
+      margin: 18px 0;
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25),
+        inset 0 0 15px rgba(255, 255, 255, 0.03);
+
+      transition:
+        transform 0.4s ease,
+        background 0.4s ease,
+        box-shadow 0.4s ease;
+
+      animation: fadeUp 0.9s ease-out 0.3s both;
+    }
+
+    /* PARAGRAPH HOVER */
+
+    p:hover {
+      transform: translateY(-5px) scale(1.01);
+
+      background: rgba(255, 255, 255, 0.12);
+
+      border-color: rgba(199, 125, 255, 0.6);
+
+      box-shadow:
+        0 15px 30px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(199, 125, 255, 0.25);
+    }
+
+    strong {
+      color: #e0aaff;
+    }
+
+    em {
+      color: #d8b4fe;
+    }
+
+    /* =========================
+       LINKS
+    ========================= */
+
+    a {
+      color: #e0aaff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    /* =========================
+       RESOURCE LINKS
+    ========================= */
+
+    .resource-link {
+      display: block;
+
+      background: rgba(255, 255, 255, 0.08);
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+
+      padding: 15px 20px;
+      margin: 15px 0;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25);
+
+      transition:
+        transform 0.4s ease,
+        background 0.4s ease,
+        box-shadow 0.4s ease;
+
+      animation: fadeUp 0.8s ease-out both;
+    }
+
+    .resource-link:nth-of-type(1) {
+      animation-delay: 0.5s;
+    }
+
+    .resource-link:nth-of-type(2) {
+      animation-delay: 0.7s;
+    }
+
+    .resource-link:nth-of-type(3) {
+      animation-delay: 0.9s;
+    }
+
+    .resource-link:hover {
+      transform:
+        translateY(-6px)
+        scale(1.02);
+
+      background: rgba(199, 125, 255, 0.15);
+
+      border-color: #c77dff;
+
+      box-shadow:
+        0 10px 30px rgba(199, 125, 255, 0.35);
+
+      letter-spacing: 0.5px;
+    }
+
+    /* =========================
+       IMAGES
+    ========================= */
+
+    .images {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      margin-top: 15px;
+
+      background: rgba(255, 255, 255, 0.06);
+
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+
+      padding: 20px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25);
+
+      animation: fadeUp 1s ease-out 1s both;
+    }
+
+    .images img {
+      width: 350px;
+      max-width: 100%;
+      height: 230px;
+
+      object-fit: cover;
+
+      border-radius: 12px;
+      border: 2px solid #c77dff;
+
+      box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.5);
+
+      transition:
+        transform 0.5s ease,
+        border-color 0.5s ease,
+        box-shadow 0.5s ease;
+
+      animation: imageFloat 5s ease-in-out infinite;
+    }
+
+    .images img:nth-child(2) {
+      animation-delay: 1.5s;
+    }
+
+    .images img:hover {
+      transform:
+        scale(1.06)
+        rotate(1deg);
+
+      border-color: #e0aaff;
+
+      box-shadow:
+        0 12px 35px rgba(199, 125, 255, 0.5);
+    }
+
+    /* =========================
+       STUDY TIPS
+    ========================= */
+
+    ul {
+      text-align: left;
+      display: inline-block;
+
+      margin-top: 5px;
+
+      background: rgba(255, 255, 255, 0.07);
+
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 15px;
+
+      padding: 20px 30px 20px 45px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25);
+
+      animation: fadeUp 1s ease-out 1.2s both;
+    }
+
+    li {
+      margin-bottom: 8px;
+      color: #eeeeee;
+
+      transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+    }
+
+    li:hover {
+      transform: translateX(8px);
+      color: #e0aaff;
+    }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .table-container {
+      margin-top: 15px;
+
+      padding: 15px;
+
+      background: rgba(255, 255, 255, 0.06);
+
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 18px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25);
+
+      overflow-x: auto;
+
+      animation: fadeUp 1s ease-out 1.4s both;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      background: rgba(255, 255, 255, 0.05);
+
+      color: #ffffff;
+    }
+
+    caption {
+      color: #e0aaff;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    th {
+      background: rgba(90, 24, 154, 0.75);
+      color: white;
+    }
+
+    td,
+    th {
+      padding: 12px;
+      border: 1px solid rgba(199, 125, 255, 0.5);
+
+      transition:
+        background 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    tr {
+      animation: fadeUp 0.6s ease-out both;
+    }
+
+    tr:nth-child(1) {
+      animation-delay: 1.5s;
+    }
+
+    tr:nth-child(2) {
+      animation-delay: 1.6s;
+    }
+
+    tr:nth-child(3) {
+      animation-delay: 1.7s;
+    }
+
+    tr:nth-child(4) {
+      animation-delay: 1.8s;
+    }
+
+    tr:nth-child(5) {
+      animation-delay: 1.9s;
+    }
+
+    tr:nth-child(6) {
+      animation-delay: 2s;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    tr:hover {
+      background-color: rgba(199, 125, 255, 0.2);
+    }
+
+    tr:hover td {
+      transform: translateX(3px);
+    }
+
+    /* =========================
+       HOME BUTTON
+    ========================= */
+
+    .buttons {
+      text-align: center;
+      margin-top: 35px;
+
+      animation: fadeUp 1s ease-out 2.2s both;
+    }
+
+    .btn {
+      display: inline-block;
+
+      padding: 12px 30px;
+
+      color: #ffffff;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(157, 78, 221, 0.8),
+          rgba(90, 24, 154, 0.8)
+        );
+
+      text-decoration: none;
+
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1rem;
+      font-weight: bold;
+
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 30px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.4);
+
+      transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        background 0.4s ease;
+
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .btn:hover {
+      color: #ffffff;
+      text-decoration: none;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(199, 125, 255, 0.9),
+          rgba(123, 44, 191, 0.9)
+        );
+
+      transform:
+        translateY(-5px)
+        scale(1.05);
+
+      box-shadow:
+        0 10px 35px rgba(199, 125, 255, 0.6);
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+    }
+
+    /* =========================
+       REDUCED MOTION
+    ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      body {
+        padding: 20px 10px;
+      }
+
+      .container {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        padding: 15px;
+      }
+
+      .images {
+        padding: 15px;
+      }
+
+      .images img {
+        height: 200px;
+      }
+
+      ul {
+        padding: 18px 20px 18px 40px;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+
+      td,
+      th {
+        padding: 8px;
+      }
+
+      .btn {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>📚 Web Development Resource Page</h1>
+
+    <p>
+      Welcome! This page gathers helpful resources, study tips, and a
+      schedule to help beginners learn web development step by step.
+    </p>
+
+    <!-- EXTERNAL LINKS -->
+
+    <h2>🔗 Useful Learning Links</h2>
+
+    <a
+      href="https://developer.mozilla.org/"
+      target="_blank"
+      class="resource-link"
+    >
+      MDN Web Docs — Complete HTML & CSS Reference
+    </a>
+
+    <a
+      href="https://www.w3schools.com/"
+      target="_blank"
+      class="resource-link"
+    >
+      W3Schools — Beginner-Friendly Tutorials
+    </a>
+
+    <a
+      href="https://freecodecamp.org/"
+      target="_blank"
+      class="resource-link"
+    >
+      freeCodeCamp — Free Interactive Coding Courses
+    </a>
+
+    <!-- IMAGES -->
+
+    <h2>🖼️ Coding & Study</h2>
+
+    <div class="images">
+
+      <img
+        src="https://www.ciit.edu.ph/wp-content/uploads/2024/04/student-coding-various-programming-languages-using-a-laptop-1024x683.jpg"
+        alt="Student studying coding on a laptop"
+      >
+
+      <img
+        src="https://www.upistudy.com/blog/images/introduction-to-html-css/html-css-coding-screen-1.jpg"
+        alt="HTML and CSS code displayed on screen"
+      >
+
+    </div>
+
+    <!-- STUDY TIPS -->
+
+    <h2>💡 Top Study Tips for Beginners</h2>
+
+    <ul>
+      <li>Type every example manually — don't just copy-paste code.</li>
+      <li>Save and refresh your browser after every change to test results.</li>
+      <li>Build small parts first, then combine them into bigger projects.</li>
+      <li>Keep all your project files organized in separate folders.</li>
+      <li>Don't fear errors — fixing mistakes is the best way to learn!</li>
+    </ul>
+
+    <!-- SCHEDULE TABLE -->
+
+    <h2>📅 5-Day Study Schedule</h2>
+
+    <div class="table-container">
+
+      <table>
+
+        <caption>
+          <strong>Weekly Web Development Study Plan</strong>
+        </caption>
+
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Topic</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Monday</td>
+            <td>HTML Basics — Structure & Text Elements</td>
+          </tr>
+
+          <tr>
+            <td>Tuesday</td>
+            <td>Links, Images, Lists & Tables</td>
+          </tr>
+
+          <tr>
+            <td>Wednesday</td>
+            <td>Forms & Semantic HTML</td>
+          </tr>
+
+          <tr>
+            <td>Thursday</td>
+            <td>CSS Fundamentals — Colors, Fonts & Selectors</td>
+          </tr>
+
+          <tr>
+            <td>Friday</td>
+            <td>Box Model, Layout & Responsive Design</td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- HOME BUTTON -->
+
+    <div class="buttons">
+      <a href="home.html" class="btn">🏠 Home</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

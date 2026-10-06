@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me — Yvanne Odile John B. Codino</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ==============================
+       BODY
+    ============================== */
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7b2cbf,
+          #3c096c,
+          #000000,
+          #240046
+        );
+
+      background-size: 400% 400%;
+
+      animation: backgroundMove 12s ease infinite;
+
+      color: #f5f5f5;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      overflow-x: hidden;
+
+      position: relative;
+    }
+
+    /* ==============================
+       GLOWING BACKGROUND ORBS
+    ============================== */
+
+    body::before,
+    body::after {
+      content: "";
+
+      position: fixed;
+
+      width: 300px;
+      height: 300px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(199, 125, 255, 0.15);
+
+      filter: blur(60px);
+
+      pointer-events: none;
+
+      z-index: 0;
+    }
+
+    body::before {
+      top: -120px;
+      left: -120px;
+
+      animation:
+        floatingOrb 8s ease-in-out infinite;
+    }
+
+    body::after {
+      bottom: -120px;
+      right: -120px;
+
+      animation:
+        floatingOrbReverse 10s ease-in-out infinite;
+    }
+
+    /* ==============================
+       ANIMATIONS
+    ============================== */
+
+    @keyframes backgroundMove {
+
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+
+    }
+
+    @keyframes floatingOrb {
+
+      0%,
+      100% {
+        transform:
+          translate(0, 0)
+          scale(1);
+      }
+
+      50% {
+        transform:
+          translate(100px, 80px)
+          scale(1.25);
+      }
+
+    }
+
+    @keyframes floatingOrbReverse {
+
+      0%,
+      100% {
+        transform:
+          translate(0, 0)
+          scale(1);
+      }
+
+      50% {
+        transform:
+          translate(-100px, -70px)
+          scale(1.3);
+      }
+
+    }
+
+    @keyframes containerAppear {
+
+      0% {
+        opacity: 0;
+        transform:
+          translateY(60px)
+          scale(0.92);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+
+    }
+
+    @keyframes fadeUp {
+
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+    }
+
+    @keyframes headingAppear {
+
+      0% {
+        opacity: 0;
+        transform:
+          translateY(-30px)
+          scale(0.95);
+        letter-spacing: -4px;
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+        letter-spacing: normal;
+      }
+
+    }
+
+    @keyframes headingGlow {
+
+      0%,
+      100% {
+        text-shadow:
+          0 0 10px rgba(199, 125, 255, 0.5);
+      }
+
+      50% {
+        text-shadow:
+          0 0 20px rgba(199, 125, 255, 0.9),
+          0 0 40px rgba(199, 125, 255, 0.5);
+      }
+
+    }
+
+    @keyframes cardGlow {
+
+      0%,
+      100% {
+        box-shadow:
+          0 10px 35px rgba(0, 0, 0, 0.5),
+          0 0 30px rgba(199, 125, 255, 0.15);
+      }
+
+      50% {
+        box-shadow:
+          0 15px 40px rgba(0, 0, 0, 0.55),
+          0 0 45px rgba(199, 125, 255, 0.25);
+      }
+
+    }
+
+    @keyframes buttonAppear {
+
+      0% {
+        opacity: 0;
+        transform:
+          translateY(25px)
+          scale(0.9);
+      }
+
+      100% {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+
+    }
+
+    /* ==============================
+       MAIN CONTAINER
+    ============================== */
+
+    .container {
+
+      width: 100%;
+      max-width: 700px;
+
+      text-align: center;
+
+      background:
+        rgba(255, 255, 255, 0.08);
+
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+
+      padding: 35px 40px;
+
+      border-radius: 20px;
+
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(199, 125, 255, 0.15);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.2);
+
+      position: relative;
+
+      z-index: 1;
+
+      animation:
+        containerAppear 1s ease-out,
+        cardGlow 5s ease-in-out infinite 1s;
+
+      transition:
+        transform 0.5s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-4px);
+    }
+
+    /* ==============================
+       MAIN HEADING
+    ============================== */
+
+    h1 {
+
+      font-size: 2.4rem;
+
+      margin: 0 0 10px;
+
+      color: #ffffff;
+
+      border-bottom:
+        3px solid #c77dff;
+
+      padding-bottom: 10px;
+
+      text-shadow:
+        0 0 15px rgba(199, 125, 255, 0.7);
+
+      animation:
+        headingAppear 1s ease-out,
+        headingGlow 4s ease-in-out infinite 1s;
+    }
+
+    /* ==============================
+       SECTION HEADINGS
+    ============================== */
+
+    h2 {
+
+      color: #c77dff;
+
+      font-size: 1.4rem;
+
+      margin-top: 30px;
+
+      text-shadow:
+        0 0 10px rgba(199, 125, 255, 0.3);
+
+      animation:
+        fadeUp 0.8s ease-out both;
+
+      transition:
+        transform 0.3s ease,
+        text-shadow 0.3s ease;
+    }
+
+    h2:hover {
+
+      transform:
+        translateY(-3px)
+        scale(1.03);
+
+      text-shadow:
+        0 0 15px rgba(199, 125, 255, 0.8),
+        0 0 30px rgba(199, 125, 255, 0.4);
+    }
+
+    /* ==============================
+       GLASS PARAGRAPHS
+    ============================== */
+
+    p {
+
+      color: #eeeeee;
+
+      background:
+        rgba(255, 255, 255, 0.08);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.2);
+
+      border-radius: 15px;
+
+      padding: 18px 20px;
+
+      margin: 18px 0;
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25),
+        inset 0 0 15px rgba(255, 255, 255, 0.03);
+
+      transition:
+        transform 0.4s ease,
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+
+      animation:
+        fadeUp 0.8s ease-out both;
+    }
+
+    /* Paragraph hover */
+
+    p:hover {
+
+      transform:
+        translateY(-5px)
+        scale(1.01);
+
+      background:
+        rgba(255, 255, 255, 0.12);
+
+      border-color:
+        rgba(199, 125, 255, 0.7);
+
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35),
+        0 0 25px rgba(199, 125, 255, 0.25);
+    }
+
+    strong {
+
+      color: #e0aaff;
+
+      transition:
+        color 0.3s ease,
+        text-shadow 0.3s ease;
+    }
+
+    strong:hover {
+
+      color: #ffffff;
+
+      text-shadow:
+        0 0 10px #c77dff;
+    }
+
+    em {
+
+      color: #d8b4fe;
+
+      transition:
+        color 0.3s ease;
+    }
+
+    em:hover {
+      color: #ffffff;
+    }
+
+    /* ==============================
+       LISTS
+    ============================== */
+
+    ol,
+    ul {
+
+      text-align: left;
+
+      display: inline-block;
+
+      margin-top: 5px;
+
+      background:
+        rgba(255, 255, 255, 0.07);
+
+      border:
+        1px solid rgba(255, 255, 255, 0.18);
+
+      border-radius: 15px;
+
+      padding:
+        20px 30px 20px 45px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.25);
+
+      animation:
+        fadeUp 1s ease-out both;
+
+      transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    ol:hover,
+    ul:hover {
+
+      transform:
+        translateY(-4px);
+
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(199, 125, 255, 0.2);
+    }
+
+    li {
+
+      margin-bottom: 8px;
+
+      color: #eeeeee;
+
+      transition:
+        transform 0.3s ease,
+        color 0.3s ease;
+    }
+
+    li:hover {
+
+      transform:
+        translateX(8px);
+
+      color: #e0aaff;
+
+      text-shadow:
+        0 0 8px rgba(199, 125, 255, 0.4);
+    }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ==============================
+       STAGGER LIST ITEMS
+    ============================== */
+
+    ol li,
+    ul li {
+
+      opacity: 0;
+
+      animation:
+        fadeUp 0.6s ease-out forwards;
+    }
+
+    ol li:nth-child(1),
+    ul li:nth-child(1) {
+      animation-delay: 0.5s;
+    }
+
+    ol li:nth-child(2),
+    ul li:nth-child(2) {
+      animation-delay: 0.7s;
+    }
+
+    ol li:nth-child(3),
+    ul li:nth-child(3) {
+      animation-delay: 0.9s;
+    }
+
+    ol li:nth-child(4),
+    ul li:nth-child(4) {
+      animation-delay: 1.1s;
+    }
+
+    ol li:nth-child(5),
+    ul li:nth-child(5) {
+      animation-delay: 1.3s;
+    }
+
+    /* ==============================
+       HOME BUTTON
+    ============================== */
+
+    .buttons {
+
+      margin-top: 30px;
+
+      animation:
+        buttonAppear 0.8s ease-out 1.5s both;
+    }
+
+    .btn {
+
+      display: inline-block;
+
+      padding:
+        12px 25px;
+
+      background:
+        rgba(199, 125, 255, 0.75);
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      font-weight: bold;
+
+      border-radius: 30px;
+
+      border:
+        2px solid #e0aaff;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      transition:
+        transform 0.35s ease,
+        background 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+    }
+
+    /* Button hover */
+
+    .btn:hover {
+
+      background:
+        #7b2cbf;
+
+      border-color:
+        #ffffff;
+
+      transform:
+        translateY(-6px)
+        scale(1.05);
+
+      box-shadow:
+        0 8px 25px rgba(199, 125, 255, 0.6),
+        0 0 20px rgba(199, 125, 255, 0.3);
+    }
+
+    .btn:active {
+
+      transform:
+        translateY(-2px)
+        scale(0.97);
+    }
+
+    /* ==============================
+       RESPONSIVE DESIGN
+    ============================== */
+
+    @media (max-width: 600px) {
+
+      body {
+        padding: 20px 10px;
+      }
+
+      .container {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        padding: 15px;
+      }
+
+      ol,
+      ul {
+        padding:
+          18px 20px 18px 40px;
+      }
+
+    }
+
+    /* ==============================
+       REDUCED MOTION
+    ============================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+
+        scroll-behavior: auto !important;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- MAIN HEADING -->
+
+    <h1>
+      Yvanne Odile John B. Codino
+    </h1>
+
+    <!-- ABOUT ME SECTION -->
+
+    <h2>
+      About Me
+    </h2>
+
+    <p>
+      Hello! I am a student learning
+      <strong>web development</strong>.
+      I enjoy playing video games and solving creative problems.
+      I am excited to build my own website from scratch and learn more
+      about how the web works.
+    </p>
+
+    <p>
+      I believe that
+      <em>consistency and practice</em>
+      are the keys to mastering new skills,
+      so I code and study every day to improve
+      my skills.
+    </p>
+
+    <!-- MY GOALS SECTION -->
+
+    <h2>
+      My Goals
+    </h2>
+
+    <p>
+      Here are the steps I am taking to reach my learning goal:
+    </p>
+
+    <ol>
+
+      <li>
+        Learn and master HTML structure and common elements.
+      </li>
+
+      <li>
+        Understand CSS styling, colors, and basic layout design.
+      </li>
+
+      <li>
+        Build fully responsive pages that work on mobile and desktop.
+      </li>
+
+      <li>
+        Create a complete personal portfolio website by the end of the course.
+      </li>
+
+    </ol>
+
+    <!-- MY INTERESTS SECTION -->
+
+    <h2>
+      My Interests
+    </h2>
+
+    <ul>
+
+      <li>
+        Singing
+      </li>
+
+      <li>
+        Dubbing in Voice Acting
+      </li>
+
+      <li>
+        Playing Video Games
+      </li>
+
+      <li>
+        Drawing in Digital and Traditional Art
+      </li>
+
+      <li>
+        Sleeping
+      </li>
+
+    </ul>
+
+    <!-- HOME BUTTON -->
+
+    <div class="buttons">
+
+      <a href="home.html" class="btn">
+        🏠 Home
+      </a>
+
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+
+            /* Animated Violet to Black Background */
+            background:
+                linear-gradient(
+                    135deg,
+                    #8a2be2,
+                    #4b0082,
+                    #17002b,
+                    #000000,
+                    #5a189a
+                );
+
+            background-size: 400% 400%;
+            animation: backgroundMove 15s ease infinite;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 50px 20px;
+
+            overflow-x: hidden;
+
+            position: relative;
+        }
+
+        /* =================================
+           FLOATING BACKGROUND GLOWS
+        ================================= */
+
+        body::before,
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(174, 85, 255, 0.18);
+
+            filter: blur(80px);
+
+            pointer-events: none;
+
+            z-index: -1;
+        }
+
+        body::before {
+            top: 5%;
+            left: 5%;
+
+            animation: floatingGlow 9s ease-in-out infinite;
+        }
+
+        body::after {
+            right: 5%;
+            bottom: 5%;
+
+            animation: floatingGlowReverse 11s ease-in-out infinite;
+        }
+
+        /* =================================
+           GALLERY CONTAINER
+        ================================= */
+
+        .gallery-container {
+            width: 100%;
+            max-width: 1200px;
+
+            text-align: center;
+
+            animation: galleryAppear 1s ease forwards;
+        }
+
+        /* =================================
+           HEADER
+        ================================= */
+
+        .gallery-title {
+            font-size: 3rem;
+            margin-bottom: 10px;
+
+            font-weight: bold;
+            letter-spacing: 3px;
+
+            text-shadow:
+                0 0 10px #b56cff,
+                0 0 20px #8a2be2,
+                0 0 40px rgba(181, 108, 255, 0.6);
+
+            animation:
+                titleAppear 1s ease forwards,
+                titleGlow 3s ease-in-out infinite;
+
+            opacity: 0;
+        }
+
+        .gallery-subtitle {
+            color: #d8b9ff;
+
+            margin-bottom: 40px;
+
+            font-size: 1.1rem;
+
+            animation: subtitleAppear 1s ease 0.3s forwards;
+
+            opacity: 0;
+        }
+
+        /* =================================
+           GALLERY GRID
+        ================================= */
+
+        .gallery {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 25px;
+
+            justify-items: center;
+        }
+
+        /* =================================
+           PHOTO CARDS
+        ================================= */
+
+        .photo-card {
+            width: 100%;
+            max-width: 350px;
+
+            background: rgba(0, 0, 0, 0.45);
+
+            border: 1px solid rgba(190, 120, 255, 0.5);
+
+            border-radius: 18px;
+
+            padding: 10px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.6),
+                0 0 20px rgba(138, 43, 226, 0.25);
+
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            opacity: 0;
+
+            animation:
+                cardAppear 0.8s ease forwards,
+                cardFloat 5s ease-in-out infinite;
+
+            transition:
+                transform 0.4s ease,
+                box-shadow 0.4s ease,
+                border-color 0.4s ease;
+        }
+
+        /* Staggered card animations */
+
+        .photo-card:nth-child(1) {
+            animation-delay: 0.2s, 1.5s;
+        }
+
+        .photo-card:nth-child(2) {
+            animation-delay: 0.35s, 1.8s;
+        }
+
+        .photo-card:nth-child(3) {
+            animation-delay: 0.5s, 2.1s;
+        }
+
+        .photo-card:nth-child(4) {
+            animation-delay: 0.65s, 2.4s;
+        }
+
+        .photo-card:nth-child(5) {
+            animation-delay: 0.8s, 2.7s;
+        }
+
+        .photo-card:nth-child(6) {
+            animation-delay: 0.95s, 3s;
+        }
+
+        /* =================================
+           CARD HOVER
+        ================================= */
+
+        .photo-card:hover {
+            transform:
+                translateY(-15px)
+                scale(1.03);
+
+            border-color: #c77dff;
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(174, 85, 255, 0.7),
+                0 0 60px rgba(138, 43, 226, 0.3);
+
+            animation-play-state: paused;
+        }
+
+        /* =================================
+           IMAGE
+        ================================= */
+
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+
+            object-fit: cover;
+
+            display: block;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.6s ease,
+                filter 0.5s ease,
+                box-shadow 0.5s ease;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.08);
+
+            filter:
+                brightness(1.1)
+                saturate(1.15);
+
+            box-shadow:
+                0 0 25px rgba(190, 108, 255, 0.5);
+        }
+
+        /* =================================
+           PHOTO TEXT
+        ================================= */
+
+        .photo-title {
+            padding: 15px 5px 8px;
+
+            font-size: 1.1rem;
+            font-weight: bold;
+
+            color: white;
+
+            transition: 0.3s ease;
+        }
+
+        .photo-card:hover .photo-title {
+            color: #e0aaff;
+
+            text-shadow:
+                0 0 10px rgba(199, 125, 255, 0.7);
+        }
+
+        .photo-description {
+            color: #cbb4df;
+
+            font-size: 0.9rem;
+
+            padding-bottom: 8px;
+
+            transition: 0.3s ease;
+        }
+
+        .photo-card:hover .photo-description {
+            color: #eee;
+        }
+
+        /* =================================
+           HOME BUTTON
+        ================================= */
+
+        .home-button {
+            display: inline-block;
+
+            margin-top: 45px;
+
+            padding: 14px 35px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8a2be2,
+                    #4b0082
+                );
+
+            border: 1px solid #bd6cff;
+
+            border-radius: 30px;
+
+            text-decoration: none;
+
+            font-size: 1rem;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            box-shadow:
+                0 0 15px rgba(174, 85, 255, 0.5);
+
+            opacity: 0;
+
+            animation:
+                buttonAppear 1s ease 1.5s forwards,
+                buttonPulse 3s ease-in-out 2.5s infinite;
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .home-button:hover {
+            transform:
+                translateY(-5px)
+                scale(1.07);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #a855f7,
+                    #6a0dad
+                );
+
+            box-shadow:
+                0 0 20px rgba(190, 108, 255, 0.8),
+                0 0 40px rgba(190, 108, 255, 0.4);
+        }
+
+        /* =================================
+           LIGHTBOX
+        ================================= */
+
+        .lightbox {
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0, 0, 0, 0.92);
+
+            display: none;
+
+            justify-content: center;
+            align-items: center;
+
+            z-index: 999;
+
+            padding: 30px;
+
+            opacity: 0;
+        }
+
+        .lightbox.active {
+            display: flex;
+
+            animation: lightboxFadeIn 0.35s ease forwards;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 0 40px rgba(174, 85, 255, 0.7),
+                0 0 80px rgba(138, 43, 226, 0.35);
+
+            animation: imageZoomIn 0.45s ease forwards;
+        }
+
+        /* =================================
+           CLOSE BUTTON
+        ================================= */
+
+        .close {
+            position: absolute;
+
+            top: 25px;
+            right: 35px;
+
+            font-size: 45px;
+
+            color: white;
+
+            cursor: pointer;
+
+            transition:
+                color 0.2s ease,
+                transform 0.3s ease;
+        }
+
+        .close:hover {
+            color: #bd6cff;
+
+            transform:
+                rotate(90deg)
+                scale(1.15);
+
+            text-shadow:
+                0 0 15px #bd6cff;
+        }
+
+        /* =================================
+           ANIMATIONS
+        ================================= */
+
+        @keyframes backgroundMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes floatingGlow {
+            0%,
+            100% {
+                transform:
+                    translate(0, 0)
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    translate(90px, 50px)
+                    scale(1.25);
+            }
+        }
+
+        @keyframes floatingGlowReverse {
+            0%,
+            100% {
+                transform:
+                    translate(0, 0)
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    translate(-80px, -60px)
+                    scale(1.2);
+            }
+        }
+
+        @keyframes galleryAppear {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes titleAppear {
+            from {
+                opacity: 0;
+                transform:
+                    translateY(-30px)
+                    scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        @keyframes subtitleAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes titleGlow {
+            0%,
+            100% {
+                text-shadow:
+                    0 0 10px #b56cff,
+                    0 0 20px #8a2be2,
+                    0 0 40px rgba(181, 108, 255, 0.5);
+            }
+
+            50% {
+                text-shadow:
+                    0 0 20px #d8b4fe,
+                    0 0 40px #a855f7,
+                    0 0 65px rgba(181, 108, 255, 0.8);
+            }
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(50px)
+                    scale(0.85)
+                    rotateX(10deg);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1)
+                    rotateX(0);
+            }
+        }
+
+        @keyframes cardFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+        @keyframes buttonAppear {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+        @keyframes buttonPulse {
+            0%,
+            100% {
+                box-shadow:
+                    0 0 15px rgba(174, 85, 255, 0.5);
+            }
+
+            50% {
+                box-shadow:
+                    0 0 25px rgba(190, 108, 255, 0.8),
+                    0 0 45px rgba(138, 43, 226, 0.35);
+            }
+        }
+
+        @keyframes lightboxFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes imageZoomIn {
+            from {
+                opacity: 0;
+
+                transform:
+                    scale(0.7)
+                    rotate(-2deg);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    rotate(0);
+            }
+        }
+
+        /* =================================
+           TABLET
+        ================================= */
+
+        @media (max-width: 900px) {
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery-title {
+                font-size: 2.6rem;
+            }
+        }
+
+        /* =================================
+           MOBILE
+        ================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 30px 15px;
+            }
+
+            .gallery-title {
+                font-size: 2.2rem;
+
+                letter-spacing: 1px;
+            }
+
+            .gallery-subtitle {
+                font-size: 1rem;
+
+                margin-bottom: 30px;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+
+                gap: 20px;
+            }
+
+            .photo-card {
+                max-width: 400px;
+            }
+
+            .photo-card img {
+                height: 230px;
+            }
+
+            .home-button {
+                width: 100%;
+
+                max-width: 300px;
+            }
+
+            .close {
+                top: 15px;
+                right: 20px;
+
+                font-size: 38px;
+            }
+        }
+
+        /* =================================
+           REDUCED MOTION
+        ================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+
+                scroll-behavior: auto !important;
+
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="gallery-container">
+
+        <h1 class="gallery-title">
+            My Photo Gallery
+        </h1>
+
+        <p class="gallery-subtitle">
+            A collection of beautiful memories
+        </p>
+
+        <div class="gallery">
+
+            <!-- Photo 1 -->
+            <div class="photo-card">
+
+                <img
+                    src="https://i.pinimg.com/736x/84/13/14/8413148c41fb1e8315bc4c1c64365b76.jpg"
+                    alt="Character"
+                >
+
+                <div class="photo-title">
+                    Death
+                </div>
+
+                <div class="photo-description">
+                    Death, one of the 4 horseman of the apocalypse.
+                </div>
+
+            </div>
+
+            <!-- Photo 2 -->
+            <div class="photo-card">
+
+                <img
+                    src="https://i.pinimg.com/736x/3e/9a/ab/3e9aab5e6b7064934dd7bc2e87ba8b16.jpg"
+                    alt="Angel"
+                >
+
+                <div class="photo-title">
+                    Angel Raphael
+                </div>
+
+                <div class="photo-description">
+                    The Archangel of Healing.
+                </div>
+
+            </div>
+
+            <!-- Photo 3 -->
+            <div class="photo-card">
+
+                <img
+                    src="https://i.pinimg.com/736x/02/cd/dc/02cddcb00fd0709e8b5cee60b512af9f.jpg"
+                    alt="Lord Jesus"
+                >
+
+                <div class="photo-title">
+                    Lord Jesus Christ
+                </div>
+
+                <div class="photo-description">
+                    The Lord Jesus is embracing and rescuing the small lost lamb.
+                </div>
+
+            </div>
+
+            <!-- Photo 4 -->
+            <div class="photo-card">
+
+                <img
+                    src="https://i.pinimg.com/736x/a7/b6/10/a7b61081fa15a68c5cf844ad259b171c.jpg"
+                    alt="Phoenix"
+                >
+
+                <div class="photo-title">
+                    Phoenix
+                </div>
+
+                <div class="photo-description">
+                    The Mystical Blazing Bird of Rebirth.
+                </div>
+
+            </div>
+
+            <!-- Photo 5 -->
+            <div class="photo-card">
+
+                <img
+                    src="https://i.pinimg.com/736x/c5/d6/be/c5d6be4bf2039423271cfaf964b9fd6d.jpg"
+                    alt="Zhongli"
+                >
+
+                <div class="photo-title">
+                    Zhongli
+                </div>
+
+                <div class="photo-description">
+                    Zhongli from Genshin Impact is a mysterious, deeply
+                    knowledgeable consultant for the Wangsheng Funeral Parlor
+                    who is secretly the retired Liyue Geo Archon, Morax.
+                </div>
+
+            </div>
+
+            <!-- Photo 6 -->
+            <div class="photo-card">
+
+                <img
+                    src="https://i.pinimg.com/1200x/6a/3a/b7/6a3ab75c0ac50a2b1556976d4a6ee833.jpg"
+                    alt="Bakugo Katsuki"
+                >
+
+                <div class="photo-title">
+                    Bakugo Katsuki
+                </div>
+
+                <div class="photo-description">
+                    Katsuki Bakugo is a central protagonist, student in Class
+                    1-A at U.A. High School, and rival to Izuku Midoriya in
+                    the anime series My Hero Academia.
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Home Button -->
+        <a href="home.html" class="home-button">
+            🏠 Home
+        </a>
+
+    </div>
+
+    <!-- Image Lightbox -->
+    <div class="lightbox" id="lightbox">
+
+        <span class="close" id="close">
+            &times;
+        </span>
+
+        <img id="lightboxImage" src="" alt="Expanded photo">
+
+    </div>
+
+    <script>
+
+        const images =
+            document.querySelectorAll(".photo-card img");
+
+        const lightbox =
+            document.getElementById("lightbox");
+
+        const lightboxImage =
+            document.getElementById("lightboxImage");
+
+        const close =
+            document.getElementById("close");
+
+
+        /* =================================
+           OPEN IMAGE
+        ================================= */
+
+        images.forEach(image => {
+
+            image.addEventListener("click", () => {
+
+                lightbox.classList.add("active");
+
+                lightboxImage.src = image.src;
+
+                lightboxImage.alt = image.alt;
+
+            });
+
+        });
+
+
+        /* =================================
+           CLOSE BUTTON
+        ================================= */
+
+        close.addEventListener("click", () => {
+
+            lightbox.classList.remove("active");
+
+        });
+
+
+        /* =================================
+           CLOSE OUTSIDE IMAGE
+        ================================= */
+
+        lightbox.addEventListener("click", (event) => {
+
+            if (event.target === lightbox) {
+
+                lightbox.classList.remove("active");
+
+            }
+
+        });
+
+
+        /* =================================
+           ESCAPE KEY
+        ================================= */
+
+        document.addEventListener("keydown", (event) => {
+
+            if (event.key === "Escape") {
+
+                lightbox.classList.remove("active");
+
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>
